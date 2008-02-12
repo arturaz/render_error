@@ -1,0 +1,7 @@
+== render_error
+
+Adds :error => status_code option to render.
+
+Will first try to render errors/status_code.html.erb. If it's not there - 
+just outputs status code in <h1> as text (with layout). Pass :text to
+specify error message.
