@@ -7,18 +7,20 @@ module Arturaz
         options[:locals] ||= {}
         options[:locals][:text] = options.delete(:text)
         
-        begin
+        filename = File.join(RAILS_ROOT, 'app', 'views', 'errors', 
+          "#{options[:error]}.html.erb")
+        if File.file?(filename)
           render_without_errors(
-            options.merge({:action => "errors/#{options[:error]}"}),
+            options.merge(:file => filename),
             deprecated_status,
             &block
           )
-        rescue ::ActionController::MissingTemplate
+        else
           render_without_errors(
-            options.merge({
+            options.merge(
               :text => "<h1>Klaida #{options[:error]}!</h1>" +
                 options[:locals][:text].to_s
-            }),
+            ),
             deprecated_status,
             &block
           )
