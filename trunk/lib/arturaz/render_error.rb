@@ -25,8 +25,6 @@ module Arturaz
             &block
           )
         end
-        
-        return
       else
         render_without_errors(options, deprecated_status, &block)
       end
