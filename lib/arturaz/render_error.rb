@@ -1,6 +1,6 @@
 module Arturaz
   module RenderError
-    def render_with_errors(options = nil, deprecated_status = nil, &block)
+    def render_with_errors(options = nil, extra_options = {}, &block)
       if options.is_a? Hash and options.has_key?(:error)
         options[:layout] ||= true
         options[:status] ||= options[:error].to_i
@@ -12,7 +12,7 @@ module Arturaz
         if File.file?(filename)
           render_without_errors(
             options.merge(:file => filename),
-            deprecated_status,
+            extra_options,
             &block
           )
         else
@@ -21,12 +21,12 @@ module Arturaz
               :text => "<h1>Klaida #{options[:error]}!</h1>" +
                 options[:locals][:text].to_s
             ),
-            deprecated_status,
+            extra_options,
             &block
           )
         end
       else
-        render_without_errors(options, deprecated_status, &block)
+        render_without_errors(options, extra_options, &block)
       end
     end
   end
